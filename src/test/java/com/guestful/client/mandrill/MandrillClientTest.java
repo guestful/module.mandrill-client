@@ -57,7 +57,13 @@ public class MandrillClientTest {
         message.getMergeVars("mathieu@guestful.com")
             .set("VARNAME", "VAL");
 
-        message.send();
+        //message.send();
+
+        String rendered = client.createMandrillMessage()
+            .slug("smstostaffonreservationcancelation-fr")
+            .set("TEST", "Hello world!")
+            .render();
+        System.out.println(rendered);
     }
 
 }

@@ -253,7 +253,6 @@ public class MandrillMessage {
     public void send(JsonObject message) throws MandrillException {
         JsonObjectBuilder bodyBuilder = Json.createObjectBuilder()
             .add("key", config.getApiKey())
-            .add("async", config.isAsync())
             .add("message", message);
         if (slug != null) {
             bodyBuilder.add("template_name", slug);
@@ -266,6 +265,30 @@ public class MandrillMessage {
             if (response.getStatus() != 200) {
                 throw new MandrillException(response, body);
             }
+        } finally {
+            response.close();
+        }
+    }
+
+    public String render() throws MandrillException {
+        return render(toJson());
+    }
+
+    public String render(JsonObject message) throws MandrillException {
+        JsonObjectBuilder bodyBuilder = Json.createObjectBuilder()
+            .add("key", config.getApiKey())
+            .add("merge_vars", message.getJsonArray("global_merge_vars"));
+        if (slug != null) {
+            bodyBuilder.add("template_name", slug);
+            bodyBuilder.add("template_content", Json.createArrayBuilder());
+        }
+        JsonObject body = bodyBuilder.build();
+        Response response = getClient().request(HttpMethod.POST, "templates/render.json", body);
+        try {
+            if (response.getStatus() != 200) {
+                throw new MandrillException(response, body);
+            }
+            return response.readEntity(JsonObject.class).getString("html");
         } finally {
             response.close();
         }

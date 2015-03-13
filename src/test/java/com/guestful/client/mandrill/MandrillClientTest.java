@@ -16,6 +16,7 @@
 package com.guestful.client.mandrill;
 
 import org.glassfish.jersey.jsonp.JsonProcessingFeature;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -33,6 +34,7 @@ import java.util.logging.LogManager;
 public class MandrillClientTest {
 
     @Test
+    @Ignore
     public void test() {
         LogManager.getLogManager().reset();
         SLF4JBridgeHandler.install();

@@ -43,7 +43,7 @@ public class MandrillVars {
         if (value == null) return this;
         vars.add(Json.createObjectBuilder()
             .add("name", name)
-            .add("content", value));
+            .add("content", String.valueOf(value)));
         return this;
     }
 
@@ -51,35 +51,37 @@ public class MandrillVars {
         if (value == null) return this;
         vars.add(Json.createObjectBuilder()
             .add("name", name)
-            .add("content", value));
+            .add("content", String.valueOf(value)));
         return this;
     }
 
     public MandrillVars set(String name, int value) {
         vars.add(Json.createObjectBuilder()
             .add("name", name)
-            .add("content", value));
+            .add("content", String.valueOf(value)));
         return this;
     }
 
     public MandrillVars set(String name, long value) {
         vars.add(Json.createObjectBuilder()
             .add("name", name)
-            .add("content", value));
+            .add("content", String.valueOf(value)));
         return this;
     }
 
     public MandrillVars set(String name, double value) {
         vars.add(Json.createObjectBuilder()
             .add("name", name)
-            .add("content", value));
+            .add("content", String.valueOf(value)));
         return this;
     }
 
     public MandrillVars set(String name, boolean value) {
-        vars.add(Json.createObjectBuilder()
-            .add("name", name)
-            .add("content", value));
+        if (value) {
+            vars.add(Json.createObjectBuilder()
+                .add("name", name)
+                .add("content", String.valueOf(true)));
+        }
         return this;
     }
 
